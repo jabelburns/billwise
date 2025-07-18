@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Billwise</title>
+  <style>
+    body { font-family: sans-serif; padding: 2em; background: #f0f0f0; }
+    header { text-align: center; }
+    .bill { background: white; padding: 1em; margin: 1em 0; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Billwise 🧾</h1>
+    <p>Understand new bills in plain English. Select a state:</p>
+    <select id="state" onchange="loadBills()">
+      <option value="us">Federal (demo)</option>
+      <option value="ks">Kansas</option>
+      <option value="ca">California</option>
+    </select>
+  </header>
+  <main id="bills">Loading...</main>
+  <script>
+    async function loadBills() {
+      const state = document.getElementById("state").value;
+      const res = await fetch(`/api/bills/${state}`);
+      const bills = await res.json();
+      const el = document.getElementById("bills");
+      el.innerHTML = bills.map(b => `
+        <div class="bill">
+          <h2>${b.title}</h2>
+          <p>${b.summary}</p>
+          <small>${b.date}</small>
+        </div>
+      `).join("");
+    }
+    loadBills();
+  </script>
+</body>
+</html>
