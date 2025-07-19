@@ -23,7 +23,7 @@
   <script>
     async function loadBills() {
       const state = document.getElementById("state").value;
-      const res = await fetch(`/api/bills/${state}`);
+      const res = await fetch(`https://b9ad296a-9e05-43d4-a850-406de144d32a-00-sqsxibi7684x.janeway.replit.dev/api/bills/${state}`);
       const bills = await res.json();
       const el = document.getElementById("bills");
       el.innerHTML = bills.map(b => `
